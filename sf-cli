@@ -11,6 +11,7 @@ $loader = require 'vendor/autoload.php';
 $application = new Application();
 $application->addCommands([
   new SiteFactoryAPI\Command\ListBackups(),
+  new SiteFactoryAPI\Command\CreateBackup(),
   new SiteFactoryAPI\Command\DeleteBackup(),
   new SiteFactoryAPI\Command\ListSites(),
   new SiteFactoryAPI\Command\CreateSite(),
