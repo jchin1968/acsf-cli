@@ -28,15 +28,35 @@ class CreateBackup extends Command {
         InputArgument::REQUIRED,
         'Site ID'
       )
-      ->addArgument(
+      ->addOption(
         'label',
-        InputArgument::REQUIRED,
-        'A description for this backup'
+        'l',
+        InputOption::VALUE_OPTIONAL,
+        'The human-readable description of this backup.'
       )
-      ->addArgument(
+      ->addOption(
+        'callback_url',
+        'u',
+        InputOption::VALUE_OPTIONAL,
+        'The callback URL, which is invoked upon completion.'
+      )
+      ->addOption(
+        'callback_method',
+        'm',
+        InputOption::VALUE_OPTIONAL,
+        'The callback method, "GET", or "POST". Uses "POST" if empty.'
+      )
+      ->addOption(
+        'caller_data',
+        'r',
+        InputOption::VALUE_OPTIONAL,
+        'Data that should be included in the callback, json encoded.'
+      )
+      ->addOption(
         'components',
-        InputArgument::REQUIRED,
-        'Components to backup. Possible values: codebase, database, public files, private files, themes. If this parameter is not provided, it will default to a backup with every component.'
+        'c',
+        InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+        'Array of components to be included in the backup. The following component names are accepted: codebase, database, public files, private files, themes. When omitting this parameter it will default to a backup with every component.'
       );
   }
 
@@ -46,11 +66,20 @@ class CreateBackup extends Command {
   protected function execute(InputInterface $input, OutputInterface $output) {
     $io = new SymfonyStyle($input, $output);
     $site_id = $input->getArgument('site_id');
-    $label = $input->getArgument('label');
+
+    $data = array_filter([
+      'label' => $input->getOption('label'),
+      'callback_url' => $input->getOption('callback_url'),
+      'callback_method' => $input->getOption('callback_method'),
+      'caller_data' => $input->getOption('caller_data'),
+      'components' => array_map(function ($component) {
+        return $component; },
+        $input->getOption('components')),
+     ]);
 
     $client = ConfigFile::load($input->getArgument('sitegroup'))->getApiClient();
 
-    $response = $client->request('DELETE', "sites/$site_id/backups/$backup_id", [
+    $response = $client->request('POST', "sites/$site_id/backup", [
       'headers' => [
         'Content-Type' => 'application/json'
       ]
