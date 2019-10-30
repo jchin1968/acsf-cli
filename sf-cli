@@ -16,6 +16,7 @@ $application->addCommands([
   new SiteFactoryAPI\Command\ListSites(),
   new SiteFactoryAPI\Command\CreateSite(),
   new SiteFactoryAPI\Command\ListGroups(),
-  new SiteFactoryAPI\Command\StatusTask()
+  new SiteFactoryAPI\Command\StatusTask(),
+  new SiteFactoryAPI\Command\ListTasks()
 ]);
 $application->run();
