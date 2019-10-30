@@ -15,6 +15,7 @@ $application->addCommands([
   new SiteFactoryAPI\Command\DeleteBackup(),
   new SiteFactoryAPI\Command\ListSites(),
   new SiteFactoryAPI\Command\CreateSite(),
-  new SiteFactoryAPI\Command\ListGroups()
+  new SiteFactoryAPI\Command\ListGroups(),
+  new SiteFactoryAPI\Command\StatusTask()
 ]);
 $application->run();
