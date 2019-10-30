@@ -56,7 +56,7 @@ class CreateBackup extends Command {
         'components',
         'c',
         InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
-        'Array of components to be included in the backup. The following component names are accepted: codebase, database, public files, private files, themes. When omitting this parameter it will default to a backup with every component.'
+        'Components to backup. Possible values are: codebase, database, public files, private files and themes. Omitting this option will backup every component. To specify multiple components, prefix each one with -c.'
       );
   }
 
