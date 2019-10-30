@@ -16,8 +16,8 @@ class StatusTask extends Command {
    */
   protected function configure() {
     $this
-      ->setName('status:task')
-      ->setDescription('Display current status for a task.')
+      ->setName('task:status')
+      ->setDescription('Display current task status.')
       ->addArgument(
         'sitegroup',
         InputArgument::REQUIRED,
