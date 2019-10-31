@@ -72,6 +72,7 @@ class ListBackupTasks extends Command {
     // Build formatted output.
     $rows = [];
     $status = [
+      1 => 'not started',
       4 => 'in progress',
       8 => 'waiting',
       16 => 'completed',
@@ -85,8 +86,8 @@ class ListBackupTasks extends Command {
         'priority' => $row['priority'],
         'status' => $status[$row['status']],
         'added' => date('Y-m-d h:i:s', $row['added']),
-        'started' => date('h:i:s', $row['started']),
-        'completed' => date('h:i:s', $row['completed']),
+        'started' => $row['started'] ? date('h:i:s', $row['started']) : '',
+        'completed' => $row['completed'] ? date('h:i:s', $row['completed']) : '',
         'paused' => $row['paused'],
         'error_message' => $row['error_message'],
       ];  
