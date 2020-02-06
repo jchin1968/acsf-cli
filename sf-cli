@@ -12,7 +12,6 @@ $application = new Application();
 $application->addCommands([
   new SiteFactoryAPI\Command\ListBackups(),
   new SiteFactoryAPI\Command\CreateBackup(),
-  new SiteFactoryAPI\Command\CreateBackupBulk(),
   new SiteFactoryAPI\Command\DeleteBackup(),
   new SiteFactoryAPI\Command\ListSites(),
   new SiteFactoryAPI\Command\CreateSite(),
