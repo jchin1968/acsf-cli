@@ -2,7 +2,6 @@
 
 namespace SiteFactoryAPI\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -10,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use SiteFactoryAPI\Config\ConfigFile;
 
-class CreateBackup extends Command {
+class CreateBackup extends AcsfCommandBase {
   /**
    * @inheritdoc
    */
@@ -89,15 +88,7 @@ class CreateBackup extends Command {
     // If first site_id argument is 'all' then fetch all sites to backup
     if ($site_ids[0] == 'all') {
       // Get a list of all sites.
-      $response = $client->request('GET', "sites", [
-        'query' => [
-          'page' => 1,
-          'limit' => 5000
-        ]
-      ]);
-      $response_body = $response->getBody();
-      $response_body = json_decode($response_body, TRUE);
-      $sites = $response_body['sites'];
+      $sites = $this->getAllSites($client);
 
       // Rebuild $site_ids array.
       $site_ids = [];
